@@ -1,0 +1,31 @@
+<h1>Редактирование статьи: <?= $article->getName() ?></h1>
+
+<?php if (!empty($error)) : ?>
+    <p style="background-color: red"><?= $error ?></p>
+<?php endif ?>
+<div class="m-3 col-md-6">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="inputName" class="form-label">Название статьи</label>
+            <input type="text" id="inputName" name="name" class="form-control" value="<?= $_POST['name'] ?? $article->getName() ?>">
+        </div>
+        <div class="mb-3">
+            <label for="inputText" class="form-label">Текст статьи</label>
+            <textarea id="inputText" name="text" class="form-control"><?= $_POST['text'] ?? $article->getText() ?></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="inputImg" class="form-label">Изображение</label>
+            <input type="file" id="inputImg" class="form-control" name="img">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Отправить">
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? "article/{$article->getId()}" ?>" class="btn btn-primary">Отменить</a>
+    </form>
+
+    <form action="process.php" method="POST">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+        <input type="text" name="username" placeholder="Имя пользователя">
+        <button type="submit">Отправить</button>
+    </form>
+
+</div>
